@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+@Html.Partial("_MenuNavigation")
+
+<div class="LectoreMessage">
+    <h1>Welcome to Your Dashboard</h1>
+    <p>
+        This dashboard allows you, as a Lecture, to submit monthly claims for academic sessions conducted.
+        Please ensure all fields are completed accurately and that supporting documents are uploaded before submission.
+    </p>
+</div>
+
+<div class="ClaimFormContainer">
+    <form class="LectureClaimForm" method="post" enctype="multipart/form-data">
+        <label for="lectureName">Lecture Name</label>
+        <input type="text" id="lectureName" name="lectureName" required>
+
+        <label for="lectureId">Lecture ID</label>
+        <input type="text" id="lectureId" name="lectureId" required>
+
+        <label for="moduleName">Module Name</label>
+        <input type="text" id="moduleName" name="moduleName" required>
+
+        <label for="claimFrom">Claim Period - From</label>
+        <input type="date" id="claimFrom" name="claimFrom" required>
+
+        <label for="claimTo">Claim Period - To</label>
+        <input type="date" id="claimTo" name="claimTo" required>
+
+        <label for="hourlyWage">Hourly Wage (ZAR)</label>
+        <input type="number" id="hourlyWage" name="hourlyWage" step="0.01" required>
+
+        <label for="sessionHours">Number of Sessions / Hours</label>
+        <input type="number" id="sessionHours" name="sessionHours" required>
+
+        <label for="supportingDocs">Upload Supporting Documents</label>
+        <input type="file" id="supportingDocs" name="supportingDocs" accept=".pdf,.doc,.docx,.jpg,.png" required>
+
+        <button type="submit">Submit Claim</button>
+        <a href="@Url.Action("ViewClaim", "Employee")" class="claim-history-btn">View Claim History</a>
+        
+    </form>
+</div>
+<div class="copyright">
+    <footer>
+        <p>&copy; 2025 Contract Monthly Claim System. All rights reserved.</p>
+    </footer>
+</div>
+

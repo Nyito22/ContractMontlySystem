@@ -1,0 +1,132 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+@Html.Partial("_MenuNavigation")
+
+
+<div class="LectoreMessage">
+    
+    <h1>Claims Pending Review</h1>
+    <p>
+        Below is a list of submitted claims by lecturers. You may pre-approve claims or flag them for admin review.
+    </p>
+</div>
+    <table class="claims-table">
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Lecturer</th>
+                <th>Module</th>
+                <th>Hours</th>
+                <th>Submitted On</th>
+                <th>Status</th>
+                <th>Pre-Approval</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CLM1031</td>
+                <td>Mr. Dlamini</td>
+                <td>Systems Analysis</td>
+                <td>10</td>
+                <td>2025-09-05</td>
+                <td>Submitted</td>
+                <td>
+                    <select onchange="handleStatusChange(this)">
+                        <option value="">Select</option>
+                        <option value="Pre-Approved">Pre-Approve</option>
+                        <option value="Flagged">Flag for Review</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Add comment..." /></td>
+            </tr>
+            <tr>
+                <td>CLM1032</td>
+                <td>Ms. Khumalo</td>
+                <td>Database Design</td>
+                <td>12</td>
+                <td>2025-09-04</td>
+                <td>Submitted</td>
+                <td>
+                    <select onchange="handleStatusChange(this)">
+                        <option value="">Select</option>
+                        <option value="Pre-Approved">Pre-Approve</option>
+                        <option value="Flagged">Flag for Review</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Add comment..." /></td>
+            </tr>
+            <tr>
+                <td>CLM1033</td>
+                <td>Dr. Mokoena</td>
+                <td>Web Development</td>
+                <td>8</td>
+                <td>2025-09-03</td>
+                <td>Submitted</td>
+                <td>
+                    <select onchange="handleStatusChange(this)">
+                        <option value="">Select</option>
+                        <option value="Pre-Approved">Pre-Approve</option>
+                        <option value="Flagged">Flag for Review</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Add comment..." /></td>
+            </tr>
+            <tr>
+                <td>CLM1034</td>
+                <td>Prof. Naidoo</td>
+                <td>Java Programming</td>
+                <td>15</td>
+                <td>2025-09-02</td>
+                <td>Submitted</td>
+                <td>
+                    <select onchange="handleStatusChange(this)">
+                        <option value="">Select</option>
+                        <option value="Pre-Approved">Pre-Approve</option>
+                        <option value="Flagged">Flag for Review</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Add comment..." /></td>
+            </tr>
+            <tr>
+                <td>CLM1035</td>
+                <td>Mrs. Sibanda</td>
+                <td>UI/UX Design</td>
+                <td>9</td>
+                <td>2025-09-01</td>
+                <td>Submitted</td>
+                <td>
+                    <select onchange="handleStatusChange(this)">
+                        <option value="">Select</option>
+                        <option value="Pre-Approved">Pre-Approve</option>
+                        <option value="Flagged">Flag for Review</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Add comment..." /></td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="copyright">
+    <footer>
+        <p>&copy; 2025 Contract Monthly Claim System. All rights reserved.</p>
+    </footer>
+</div>
+
+ 
+
+  <!--Used Javascript to add a little bit of functionality -->
+
+<script>
+    function handleStatusChange(selectElement) {
+        const selected = selectElement.value;
+        if (selected === "Pre-Approved") {
+            alert("Claim marked as Pre-Approved.");
+        } else if (selected === "Flagged") {
+            alert("Claim flagged for admin review.");
+        }
+    }
+</script>
