@@ -1,6 +1,4 @@
-﻿@*
-   https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<ContractMontlySystem.Models.Claims>
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 @Html.Partial("_MenuNavigation")
@@ -12,89 +10,52 @@
     </p>
 </div>
 
-<table class="claims-table">
-    <thead>
-        <tr>
-            <th>Claim ID</th>
-            <th>Lecturer</th>
-            <th>Module</th>
-            <th>Hours</th>
-            <th>Submitted On</th>
-            <th>Coordinator Status</th>
-            <th>Final Decision</th>
-            <th>Manager Comment</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>CLM1031</td>
-            <td>Mr. Dlamini</td>
-            <td>Systems Analysis</td>
-            <td>10</td>
-            <td>2025-09-05</td>
-            <td>Pre-Approved</td>
-            <td>
-                <select onchange="handleFinalDecision(this)">
-                    <option value="">Select</option>
-                    <option value="Approved">Approve</option>
-                    <option value="Rejected">Reject</option>
-                </select>
-            </td>
-            <td><input type="text" placeholder="Manager comment..." /></td>
-        </tr>
+<form asp-action="UpdateFinalApproval" method="post">
+    <table class="claims-table">
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Lecturer</th>
+                <th>Module</th>
+                <th>Hours</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Status</th>
+                <th>Final Decision</th>
+                <th>Manager Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.LectureName</td>
+                    <td>@claim.ModuleName</td>
+                    <td>@claim.SessionHours</td>
+                    <td>@claim.ClaimFrom.ToShortDateString()</td>
+                    <td>@claim.ClaimTo.ToShortDateString()</td>
+                    <td>@claim.Claim_Status</td>
+                    <td>
+                        <select name="FinalStatuses[@claim.ClaimId]" class="form-control">
+                            <option value="">Select</option>
+                            <option value="Approved">Approve</option>
+                            <option value="Rejected">Reject</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="ManagerComments[@claim.ClaimId]" placeholder="Manager comment..." class="form-control" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-        
-        <tr>
-            <td>CLM1035</td>
-            <td>Mr. Kobeni</td>
-            <td>Web Development</td>
-            <td>15</td>
-            <td>2025-09-05</td>
-            <td>Pre-Approved</td>
-            <td>
-                <select onchange="handleFinalDecision(this)">
-                    <option value="">Select</option>
-                    <option value="Approved">Approve</option>
-                    <option value="Rejected">Reject</option>
-                </select>
-            </td>
-            <td><input type="text" placeholder="Manager comment..." /></td>
-        </tr>
-
-        <tr>
-            <td>CLM1031</td>
-            <td>Mr. Shibiti</td>
-            <td>Advanced Database</td>
-            <td>12</td>
-            <td>2025-09-05</td>
-            <td>Pre-Approved</td>
-            <td>
-                <select onchange="handleFinalDecision(this)">
-                    <option value="">Select</option>
-                    <option value="Approved">Approve</option>
-                    <option value="Rejected">Reject</option>
-                </select>
-            </td>
-            <td><input type="text" placeholder="Manager comment..." /></td>
-        </tr>
-
-    </tbody>
-</table>
+    <button type="submit" class="btn btn-primary">Update Statuses</button>
+</form>
 
 <div class="copyright">
     <footer>
         <p>&copy; 2025 Contract Monthly Claim System. All rights reserved.</p>
     </footer>
 </div>
-
-
-<script>
-    function handleFinalDecision(selectElement) {
-        const decision = selectElement.value;
-        if (decision === "Approved") {
-            alert("Claim has been approved.");
-        } else if (decision === "Rejected") {
-            alert("Claim has been rejected.");
-        }
-    }
-</script>

@@ -1,10 +1,28 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ContractMontlySystem.Models.Claims
 
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 @Html.Partial("_MenuNavigation")
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 
 <div class="LectoreMessage">
     <h1>Welcome to Your Dashboard</h1>
@@ -13,38 +31,64 @@
         Please ensure all fields are completed accurately and that supporting documents are uploaded before submission.
     </p>
 </div>
+<div class="container">
+    <form asp-action="Lecture" method="post" enctype="multipart/form-data" asp-controller="Employee">
+        <div class="form-group">
+            <label asp-for="LectureName">Lecture Name</label>
+            <input asp-for="LectureName" type="text" class="form-control" required />
+            <span asp-validation-for="LectureName" class="text-danger"></span>
+        </div>
 
-<div class="ClaimFormContainer">
-    <form class="LectureClaimForm" method="post" enctype="multipart/form-data">
-        <label for="lectureName">Lecture Name</label>
-        <input type="text" id="lectureName" name="lectureName" required>
+        <div class="form-group">
+            <label asp-for="LectureId">Lecture ID</label>
+            <input asp-for="LectureId" type="text" class="form-control" required />
+            <span asp-validation-for="LectureId" class="text-danger"></span>
+        </div>
 
-        <label for="lectureId">Lecture ID</label>
-        <input type="text" id="lectureId" name="lectureId" required>
+        <div class="form-group">
+            <label asp-for="ModuleName">Module Name</label>
+            <input asp-for="ModuleName" type="text" class="form-control" required />
+            <span asp-validation-for="ModuleName" class="text-danger"></span>
+        </div>
 
-        <label for="moduleName">Module Name</label>
-        <input type="text" id="moduleName" name="moduleName" required>
+        <div class="form-group">
+            <label asp-for="ClaimFrom">Claim Period - From</label>
+            <input asp-for="ClaimFrom" type="date" class="form-control" required />
+            <span asp-validation-for="ClaimFrom" class="text-danger"></span>
+        </div>
 
-        <label for="claimFrom">Claim Period - From</label>
-        <input type="date" id="claimFrom" name="claimFrom" required>
+        <div class="form-group">
+            <label asp-for="ClaimTo">Claim Period - To</label>
+            <input asp-for="ClaimTo" type="date" class="form-control" required />
+            <span asp-validation-for="ClaimTo" class="text-danger"></span>
+        </div>
 
-        <label for="claimTo">Claim Period - To</label>
-        <input type="date" id="claimTo" name="claimTo" required>
+        <div class="form-group">
+            <label asp-for="HourlyWage">Hourly Wage (ZAR)</label>
+            <input asp-for="HourlyWage" type="number" class="form-control" required step="0.01" />
+            <span asp-validation-for="HourlyWage" class="text-danger"></span>
+        </div>
 
-        <label for="hourlyWage">Hourly Wage (ZAR)</label>
-        <input type="number" id="hourlyWage" name="hourlyWage" step="0.01" required>
+        <div class="form-group">
+            <label asp-for="SessionHours">Number of Sessions / Hours</label>
+            <input asp-for="SessionHours" type="number" class="form-control" required />
+            <span asp-validation-for="SessionHours" class="text-danger"></span>
+        </div>
 
-        <label for="sessionHours">Number of Sessions / Hours</label>
-        <input type="number" id="sessionHours" name="sessionHours" required>
+        <div class="form-group">
+            <label asp-for="SupportingDocs">Upload Supporting Documents</label>
+            <input asp-for="SupportingDocs" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png" required />
+            <span asp-validation-for="SupportingDocs" class="text-danger"></span>
+        </div>
 
-        <label for="supportingDocs">Upload Supporting Documents</label>
-        <input type="file" id="supportingDocs" name="supportingDocs" accept=".pdf,.doc,.docx,.jpg,.png" required>
+        <button type="submit" class="btn btn-primary">Submit Claim</button>
 
-        <button type="submit">Submit Claim</button>
-        <a href="@Url.Action("ViewClaim", "Employee")" class="claim-history-btn">View Claim History</a>
-        
+        <a href="@Url.Action("ViewClaim", "Employee")" class="btn btn-link">View Claim History</a>
     </form>
+
 </div>
+
+
 <div class="copyright">
     <footer>
         <p>&copy; 2025 Contract Monthly Claim System. All rights reserved.</p>

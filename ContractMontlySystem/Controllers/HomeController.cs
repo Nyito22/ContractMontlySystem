@@ -15,12 +15,83 @@ namespace ContractMontlySystem.Controllers
 
         public IActionResult Index()
         {
+            sql_connection lets_connect = new sql_connection();
+            lets_connect.createUserTable();
+            return RedirectToAction("home");
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(Register user)
+        {
+            sql_connection lets_connect = new sql_connection();
+
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+            else
+            {
+               lets_connect.Store_into_Table(user.FullName,user.PhoneNumber, user.Email, user.Password,user.Role);
+                return RedirectToAction("Login");
+            }
+
+           
         }
         public IActionResult home()
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // HttpPost action to handle the login form submission
+        [HttpPost]
+        public IActionResult Login(Login user)
+        {
+            sql_connection conect = new sql_connection();
+
+            if (ModelState.IsValid)
+            {
+                
+                bool isAuthenticated = conect.LogInUser(user.Email, user.Password, user.Role);
+
+                if (isAuthenticated)
+                {
+                    
+                    switch (user.Role)  // Switch based on user role
+                    {
+                        case "Lecture":
+                            return RedirectToAction("Lecture", "Employee"); 
+                        case "ProgrammeCoordinator":
+                            return RedirectToAction("pc", "Employee");
+
+                        case "AcademicManager":
+                            return RedirectToAction("am", "Employee");
+                        default:
+                            return RedirectToAction("home", "Home"); 
+                    }
+                }
+                else
+                {
+                    
+                    ModelState.AddModelError("", "Invalid login credentials.");
+                    return View(user); 
+                }
+            }
+
+            // If the model is not valid, return to the login page with validation errors
+            return View(user);
+        }
+
 
 
         public IActionResult Privacy()

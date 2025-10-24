@@ -1,79 +1,77 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<ContractMontlySystem.Models.Claims>
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 @Html.Partial("_MenuNavigation")
 
 <div class="LectoreMessage">
     <h1>View Your Previous Claims</h1>
-   
     <p>
-        Below is a summary of your previously submitted claims. You can review the status, download supporting documents, or contact admin for queries.
-        If you notice any discrepancies, please report them immediately to ensure timely processing.
+        Below is a summary of your previously submitted claims. You can review the status,
+        download supporting documents, or contact admin for queries.
+        If you notice any discrepancies, please report them immediately.
     </p>
 </div>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 <table class="claims-table">
     <thead>
         <tr>
             <th>Claim ID</th>
-            <th>Month</th>
+            <th>Lecture Name</th>
+            <th>Lecture ID</th>
             <th>Module</th>
-            <th>Hours Claimed</th>
+            <th>Hours</th>
+            <th>Total</th>
             <th>Status</th>
-            <th>Submitted On</th>
+            <th>From</th>
+            <th>To</th>
             <th>Document</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>CLM1023</td>
-            <td>August 2025</td>
-            <td>IT Professional Practice</td>
-            <td>12</td>
-            <td>Approved</td>
-            <td>2025-09-01</td>
-            <td><a href="#">Download</a></td>
-        </tr>
-        <tr>
-            <td>CLM1024</td>
-            <td>September 2025</td>
-            <td>Database Design</td>
-            <td>10</td>
-            <td>Pending</td>
-            <td>2025-09-07</td>
-            <td><a href="#">Download</a></td>
-        </tr>
-        <tr>
-            <td>CLM1025</td>
-            <td>July 2025</td>
-            <td>Web Development</td>
-            <td>8</td>
-            <td>Rejected</td>
-            <td>2025-08-02</td>
-            <td><a href="#">Download</a></td>
-        </tr>
-        <tr>
-            <td>CLM1026</td>
-            <td>June 2025</td>
-            <td>Java Programming</td>
-            <td>15</td>
-            <td>Approved</td>
-            <td>2025-07-01</td>
-            <td><a href="#">Download</a></td>
-        </tr>
-        <tr>
-            <td>CLM1027</td>
-            <td>May 2025</td>
-            <td>System Analysis and Design</td>
-            <td>9</td>
-            <td>Pending</td>
-            <td>2025-06-03</td>
-            <td><a href="#">Download</a></td>
-        </tr>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.LectureName</td>
+                    <td>@claim.LectureId</td>
+                    <td>@claim.ModuleName</td>
+                    <td>@claim.SessionHours</td>
+                    <td>@claim.TotalAmount.ToString("R")</td>
+                    <td>@claim.Claim_Status</td>
+                    <td>@claim.ClaimFrom.ToShortDateString()</td>
+                    <td>@claim.ClaimTo.ToShortDateString()</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.SupportingDocsPath))
+                        {
+                            <a href="@Url.Content("~/uploads/" + claim.SupportingDocsPath)">Download</a>
+                        }
+                        else
+                        {
+                            <span>No file</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="10" style="text-align:center;">No claims found.</td>
+            </tr>
+        }
     </tbody>
 </table>
 
+
+<a href="@Url.Action("Lecture", "Employee")" class="btn btn-link">View Claim History</a>
 <div class="copyright">
     <footer>
         <p>&copy; 2025 Contract Monthly Claim System. All rights reserved.</p>

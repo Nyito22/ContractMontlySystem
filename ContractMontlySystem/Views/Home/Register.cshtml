@@ -1,6 +1,6 @@
-﻿@model ContractMontlySystem.Models.Login
+﻿@model ContractMontlySystem.Models.Register
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Register";
 }
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -10,26 +10,30 @@
 </header>
 
 <div class="LandingMessage">
-    <h1>Welcome Back</h1>
-    <p>Please enter your login details to access your dashboard.</p>
+    <h1>Create Your Account</h1>
+    <p>Fill out the form below to register and access the system.</p>
 </div>
 
 <div class="FormContainer">
-    <form asp-action="Login" method="post" class="LoginForm">
+    <form asp-action="Register" method="post" class="RegisterForm">
         <p>
-            Don't have an account yet?
-            <a href="@Url.Action("Register", "Home")">Click here</a> to register
+            Already have an account?
+            <a href="@Url.Action("Index", "Home")">Click here</a> to log in
         </p>
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" placeholder="Enter your full name" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
 
         <label asp-for="Email"></label>
         <input asp-for="Email" placeholder="Enter your email" />
         <span asp-validation-for="Email" class="text-danger"></span>
 
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" placeholder="Enter your password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" placeholder="Enter your phone number" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 
         <label asp-for="Role"></label>
         <select asp-for="Role">
@@ -40,7 +44,11 @@
         </select>
         <span asp-validation-for="Role" class="text-danger"></span>
 
-        <button type="submit">Login</button>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" placeholder="Enter your password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <button type="submit">Register</button>
     </form>
 </div>
 
