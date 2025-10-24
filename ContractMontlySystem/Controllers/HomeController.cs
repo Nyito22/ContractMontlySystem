@@ -82,9 +82,9 @@ namespace ContractMontlySystem.Controllers
                 }
                 else
                 {
-                    
+
                     ModelState.AddModelError("", "Invalid login credentials.");
-                    return View(user); 
+                    return View(user);
                 }
             }
 
